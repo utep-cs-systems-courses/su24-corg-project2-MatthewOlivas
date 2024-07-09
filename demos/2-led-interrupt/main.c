@@ -15,9 +15,47 @@ int main(void) {
 }
 
 
-void
-__interrupt_vec(WDT_VECTOR) WDT()	/* 250 interrupts/sec */
-{
-  P1OUT |= LED_GREEN;
-} 
+char green_state = 0;
+
+int counter = 0;
+
+
+
+void __interrupt_vec(WDT_VECTOR) WDT() { /* 250 interrupts/sec */
+
+  counter++;
+
+  switch(green_state) {
+
+  case 0:
+
+    if (counter >= 1) {
+
+      green_state = 1;
+
+      P1OUT &= ~LED_GREEN;
+
+      counter = 0;
+
+    }
+
+    break;
+
+  case 1:
+
+    if (counter >= 7) {
+
+      green_state = 0;
+
+      P1OUT |= LED_GREEN;
+
+      counter = 0;
+
+    }
+
+    break;
+
+  }
+
+}
 

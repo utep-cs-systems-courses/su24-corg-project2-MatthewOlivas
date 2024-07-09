@@ -4,9 +4,13 @@
 #include "led.h"
 
 int main(void) {
-  P1DIR |= LEDS;
-  P1OUT &= ~LED_GREEN;
-  P1OUT |= LED_RED;
+  P1DIR |= 65;
+  // P1DIR |=64;
+  P1OUT |=65;
+  //P1OUT |=64;
+  
+  // P1OUT &= ~LED_GREEN;
+  // P1OUT |= LED_RED;
 
   or_sr(0x18);		/* CPU off, GIE on */
 }
